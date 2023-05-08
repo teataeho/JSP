@@ -33,7 +33,6 @@ public class JoinService implements IUserService {
                         + "</script>";
 				out.print(htmlCode);
 				out.flush();
-				return;
 			} else {
 				//아이디가 중복되지 않은 경우 회원가입 계속 진행.
 				UserVO vo = new UserVO(
@@ -50,9 +49,8 @@ public class JoinService implements IUserService {
                         + "                </script>";
 				out.print(htmlCode);
 				out.flush();
-				return;
 			}
-			
+			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

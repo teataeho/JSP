@@ -48,6 +48,7 @@ public class LoginService implements IUserService {
 			case -1: //로그인 실패(아이디틀림)			
 				htmlCode = "<script>\r\n"
 						+ "alert('존재하지 않는 아이디입니다.');\r\n"
+						+ "history.back();\r\n"
 						+ "</script>";
 				out.print(htmlCode);
 				out.flush();

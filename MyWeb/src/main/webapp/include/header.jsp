@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,20 +59,33 @@
                 <ul class="nav navbar-nav">
 
                     <li>
-                        <a href="/Myweb">HOME</a>
+                        <a href="/MyWeb">HOME</a>
                     </li>
                     <li>
                         <a href="">Member</a>
                     </li>
                     <li>
-                        <a href="">BOARD</a>
+                        <a href="/MyWeb/list.board">BOARD</a>
                     </li>
-                    <li>
-                        <a href="/MyWeb/loginPage.user">LOGIN</a>
-                    </li>
-                    <li>
-                        <a href="/MyWeb/joinPage.user" style="color:red">JOIN</a>
-                    </li>
+                    
+                    <c:choose>
+	                    <c:when test="${user == null}">
+		                    <li>
+		                        <a href="/MyWeb/loginPage.user">LOGIN</a>
+		                    </li>
+		                    <li>
+		                        <a href="/MyWeb/joinPage.user" style="color:red">JOIN</a>
+		                    </li>
+	                    </c:when>
+	                    <c:otherwise>
+		                    <li>
+		                        <a href="/MyWeb/logout.user">LOGOUT</a>
+		                    </li>
+		                    <li>
+		                        <a href="/MyWeb/MyPage.user" style="color:red">MyPage</a>
+		                    </li>
+	                    </c:otherwise>
+                    </c:choose>
                 </ul>
             </div>
 
