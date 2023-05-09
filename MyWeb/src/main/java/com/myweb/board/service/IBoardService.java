@@ -7,5 +7,4 @@ public interface IBoardService {
 	
 	void execute(HttpServletRequest request, HttpServletResponse response);
 
-
 }

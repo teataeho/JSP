@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.myweb.user.model.UserDAO;
-import com.myweb.user.model.UserVO;
 import com.myweb.user.service.ChangePwService;
 import com.myweb.user.service.DeleteService;
 import com.myweb.user.service.IUserService;
