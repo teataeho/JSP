@@ -3,6 +3,7 @@ package com.myweb.board.model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,8 +105,7 @@ public class BoardDAO implements IBoardDAO {
 	@Override
 	public void updateBoard(int bId, String title, String content) {
 		String sql = "UPDATE my_board SET title = ?, content = ? "
-				+ "WHERE board_id = " + bId;
-		
+				+ "WHERE board_id = " + bId;		
 		try(Connection conn = ds.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, title);
@@ -118,8 +118,52 @@ public class BoardDAO implements IBoardDAO {
 
 	@Override
 	public void deleteBoard(int bId) {
-		
+		String sql = "DELETE FROM my_board WHERE board_id = " + bId;
+		try(Connection conn = ds.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
+	}
+
+	@Override
+	public List<BoardVO> searchBoard(String keyword, String category) {
+		String sql = "SELECT * FROM my_board WHERE " + category + " LIKE ?";
+		List<BoardVO> searchList = new ArrayList<>();
+		try(Connection conn = ds.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, "%" + keyword + "%");
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				searchList.add(new BoardVO(
+							rs.getInt("board_id"),
+							rs.getString("writer"),
+							rs.getString("title"),
+							rs.getString("content"),
+							rs.getTimestamp("reg_date").toLocalDateTime(),
+							rs.getInt("hit")
+						));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return searchList;
+	}
+	
+	@Override
+	public void upHit(int bId) {
+		String sql = "UPDATE my_board SET hit = hit + 1 "
+				+ "WHERE board_id = " + bId;
+		try(Connection conn = ds.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }

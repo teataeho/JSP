@@ -103,7 +103,7 @@ public class UserController extends HttpServlet {
 		case "logout":
 			System.out.println("로그아웃 요청이 들어옴!");
 			request.getSession().invalidate();
-			response.setContentType("text/html: charset=UTF-8");
+			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			String htmlCode = "<script>\r\n"
                     + "alert('로그아웃 처리되었습니다.');\r\n"

@@ -34,7 +34,8 @@
 							</div>
 
 							<div class="form-group">
-								<label for="title" hidden>글제목</label> <input id="title" name="bTitle" type="text" class="form-control" value="${article.title}">
+								<label for="title" hidden>글제목</label>
+								<input id="title" name="bTitle" type="text" class="form-control" value="${article.title}">
 							</div>
 
 							<div class="form-group">
