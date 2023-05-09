@@ -3,7 +3,6 @@ package com.myweb.board.model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,8 +80,25 @@ public class BoardDAO implements IBoardDAO {
 
 	@Override
 	public BoardVO contentBoard(int bId) {
-		
-		return null;
+		String sql = "SELECT * FROM my_board WHERE board_id = " + bId;
+		BoardVO vo = null;
+		try(Connection conn = ds.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			if(rs.next()) {
+				vo = new BoardVO(
+						bId,
+						rs.getString("writer"),
+						rs.getString("title"),
+						rs.getString("content"),
+						rs.getTimestamp("reg_date").toLocalDateTime(),
+						rs.getInt("hit")
+						);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return vo;
 	}
 
 	@Override

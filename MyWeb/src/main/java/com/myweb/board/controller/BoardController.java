@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.myweb.board.service.ContentService;
 import com.myweb.board.service.GetListService;
 import com.myweb.board.service.IBoardService;
 import com.myweb.board.service.RegistService;
@@ -31,6 +32,7 @@ public class BoardController extends HttpServlet {
 		
 		String uri = request.getRequestURI();
 		uri = uri.substring(request.getContextPath().length()+1, uri.lastIndexOf("."));
+		RequestDispatcher dp;
 		
 		switch(uri) {		
 		case "write":
@@ -69,9 +71,20 @@ public class BoardController extends HttpServlet {
 			
 			//request 객체를 다음 화면까지 운반하기 위한 forward 기능을 제공하는 객체
 			//-> RequestDispatcher
-			RequestDispatcher dp = request.getRequestDispatcher("board/board_list.jsp");
+			dp = request.getRequestDispatcher("board/board_list.jsp");
 			dp.forward(request, response);
 			break;
+			
+		case "content":
+			System.out.println("글 상세보기 요청이 들어옴!");
+			sv = new ContentService();
+			sv.execute(request, response);
+			
+			dp = request.getRequestDispatcher("board/board_content.jsp");
+			dp.forward(request, response);
+			break;
+			
+		
 		}
 	}
 
